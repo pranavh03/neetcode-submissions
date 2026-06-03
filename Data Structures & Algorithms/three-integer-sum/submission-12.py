@@ -1,0 +1,37 @@
+class Solution:
+    def threeSum(self, nums: List[int]) -> List[List[int]]:
+        nums.sort()
+        final = []
+
+        for i in range(len(nums)):
+            # Bug 3 fix: early exit
+            if nums[i] > 0:
+                break
+
+            # Bug 4 fix: skip duplicate i values
+            if i > 0 and nums[i] == nums[i - 1]:
+                continue
+
+            left = i + 1
+            right = len(nums) - 1
+
+            while left < right:
+                total = nums[i] + nums[left] + nums[right]
+
+                if total == 0:
+                    final.append([nums[i], nums[left], nums[right]])
+                    left += 1
+                    right -= 1
+
+                    # Bug 1 & 2 fix: skip duplicates ONLY after a match
+                    while left < right and nums[left] == nums[left - 1]:
+                        left += 1
+                    while left < right and nums[right] == nums[right + 1]:
+                        right -= 1
+
+                elif total < 0:  # Bug 1 fix: elif, not separate if
+                    left += 1
+                else:
+                    right -= 1
+
+        return final
