@@ -1,0 +1,11 @@
+class Solution:
+    from collections import Counter
+    def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
+        seen=defaultdict(list)
+        for word in strs:
+            key=''.join(sorted(word))
+            seen[key].append(word)
+        return [i for i in seen.values()]
+
+
+        
